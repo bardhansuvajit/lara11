@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Your custom styles */
+[type='checkbox'], [type='radio'] {
+    @apply text-primary-600;
+}
+
+.dark [type='checkbox']:checked, .dark [type='radio']:checked {
+    @apply !bg-primary-600;
+    @apply !border-primary-600;
+}
+
+.custom-1 {
+    clip: rect(0, 0, 0, 0);
+    border-width: 0;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px
+}
+
+/* .dropdown-menu {
+    inset: auto auto auto 0px;
+    right: 1vw;
+    left: auto;
+    transform: translateX(0);
+} */
