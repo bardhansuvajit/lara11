@@ -3,12 +3,14 @@
 @php
 $alignmentClasses = match ($align) {
     'left' => 'ltr:origin-top-left rtl:origin-top-right start-0',
-    'top' => 'origin-top',
+    'top' => 'origin-top bottom-12',
     default => 'ltr:origin-top-right rtl:origin-top-left end-0',
 };
 
 $width = match ($width) {
+    '24' => 'w-24',
     '48' => 'w-48',
+    '96' => 'w-96',
     default => $width,
 };
 @endphp

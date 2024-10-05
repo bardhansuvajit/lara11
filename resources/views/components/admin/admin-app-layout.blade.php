@@ -17,16 +17,24 @@
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
         <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}">
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
+        <script>
+            if (localStorage.theme === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
+
         @vite([
             'resources/css/app.css', 
             'resources/js/app.js',
             'resources/js/custom.js',
         ])
+
+        @livewireStyles
     </head>
     <body class="dark:bg-gray-800 dark:text-slate-300">
         <div class="antialiased bg-gray-50 dark:bg-gray-900">
@@ -83,12 +91,13 @@
                 <!-- footer -->
                 @include('layouts.admin.footer')
             </main>
-
-            <div id="notification-stack" class="w-auto fixed bottom-4 left-1/2 transform -translate-x-1/2 space-y-2"></div>
-
         </div>
 
+        <div id="notification-stack" class="w-auto fixed bottom-4 left-1/2 transform -translate-x-1/2 space-y-2"></div>
+
         @yield('script')
+
+        @livewireScripts
 
     </body>
 </html>
