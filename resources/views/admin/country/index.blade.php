@@ -211,9 +211,11 @@
                                         tag="secondary"
                                         href="javascript: void(0)"
                                         data-sidebar-toggle="view-sidebar"
+                                        wire:click="$emit('loadModel', {{ $item->id }})">
+                                        {{-- wire:click="loadModel({{ $item->id }})"> --}}
                                         {{-- wire:click="$emit('loadModel', 1)"> --}}
                                         {{-- wire:click="loadModel(1)"> --}}
-                                        wire:click="$dispatch('loadModel', {{ $item->id }})">
+                                        {{-- wire:click="$dispatch('loadModel', {{ $item->id }})"> --}}
                                         @slot('icon')
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
                                         @endslot
@@ -258,7 +260,7 @@
 
     @livewire('sidebar-content')
 
-    <x-modal maxWidth="sm" name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" x-init="$nextTick(() => $el.querySelector('button[type=button]').focus())">
+    <x-modal maxWidth="sm" name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
             @csrf
             @method('delete')
@@ -271,7 +273,7 @@
                 {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
             </p>
 
-            <div class="mt-6">
+            {{-- <div class="mt-6">
                 <x-admin.input-label for="password" value="{{ __('Password') }}" class="sr-only" />
 
                 <x-admin.text-input
@@ -283,7 +285,7 @@
                 />
 
                 <x-admin.input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
-            </div>
+            </div> --}}
 
             <div class="mt-6 flex justify-end">
                 <x-secondary-button x-on:click="$dispatch('close')" auto focus>

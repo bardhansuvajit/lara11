@@ -6,7 +6,13 @@
     </x-slot>
 
     <x-slot name="body">
-        <pre>@dump($model)</pre>
-        <p>Model Name: {{ $model->name ?? 'No model found' }}</p>
+        @if($record)
+            <h3>{{ $record->title }}</h3>
+            <p>{{ $record->description }}</p>
+        @else
+            <p>No record selected</p>
+        @endif
+        {{-- <pre>@dump($record)</pre>
+        <p>Model Name: {{ $record->name ?? 'No model found' }}</p> --}}
     </x-slot>
 </x-sidebar>

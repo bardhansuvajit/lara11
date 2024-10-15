@@ -7,23 +7,21 @@ use App\Models\Country;
 
 class SidebarContent extends Component
 {
-    public $model;
-    // protected $listeners = ['loadModel'];
+    public $recordId;
+    public $record;
 
-    public function loadModel($modelId)
+    // Add event listener for the loadModel event
+    protected $listeners = ['loadModel'];
+
+    // This method will load the record based on the clicked button
+    public function loadModel($id)
     {
-        $this->model = Country::find(1);
+        $this->recordId = $id;
+        $this->record = Record::find($this->recordId);
     }
 
     public function render()
     {
-        if (!$this->model) {
-            \Log::error('No Country found with id 1');
-        }
-
-        return view('livewire.sidebar-content', [
-            'model' => $this->model,
-            'otherData' => 12345,
-        ]);
+        return view('livewire.sidebar-content');
     }
 }

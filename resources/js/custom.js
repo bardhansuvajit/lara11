@@ -2,21 +2,60 @@ document.addEventListener('DOMContentLoaded', function() {
     // ## sidebar toggle
     const toggleButton = document.getElementById('drawer-toggle');
     const drawer = document.getElementById('drawer-navigation');
-    const drawerFooter = document.getElementById('drawer-footer');
     const mainContent = document.querySelector('main');
-    const sidebarWidth = '60px';
+    const screenWidth = window.innerWidth || document.documentElement.clientWidth;
+    let drawerState = localStorage.getItem('drawerState');
 
-    // Dynamically create the overlay element
+    // overlay element
     const overlay = document.createElement('div');
     overlay.id = 'drawer-overlay';
     overlay.className = 'fixed inset-0 z-30 bg-black bg-opacity-50 hidden';
-
-    // Append the overlay to the body
     document.body.appendChild(overlay);
 
-    // Check if there's a saved drawer state in localStorage
-    const savedDrawerState = localStorage.getItem('drawerState');
+    if (drawer) {
+        if(drawerState) {
+            if(screenWidth >= 768) {
+                if (drawerState === 'closed') {
+                    drawer.classList.remove('block');
+                    drawer.classList.add('hidden');
+                    mainContent.classList.remove('md:ml-64');
+                } else {
+                    drawer.classList.remove('hidden');
+                    drawer.classList.add('block');
+                }
+            }
+        }
+    }
 
+    if (toggleButton && overlay) {
+        toggleButton.addEventListener('click', function() {
+            localStorage.setItem('drawerState', 'clicked');
+
+            // drawer.style.width = '256px';
+            if (screenWidth <= 768) {
+                drawer.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+                overlay.classList.toggle('block');
+            } else {
+                drawer.classList.toggle('block');
+                drawer.classList.toggle('hidden');
+                mainContent.classList.toggle('md:ml-64');
+
+                if (drawer.classList.contains('hidden')) {
+                    localStorage.setItem('drawerState', 'closed');
+                } else {
+                    localStorage.setItem('drawerState', 'open');
+                }
+            }
+        });
+
+        overlay.addEventListener('click', function() {
+            drawer.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+    }
+
+    /*
     if (drawer && savedDrawerState) {
         // Apply the saved state
         if (savedDrawerState === sidebarWidth) {
@@ -85,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
             overlay.classList.add('hidden');
         });
     }
+    */
 
 
 
@@ -277,9 +317,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     ${descHtml}
                     ${buttonsHtml}
                 </div>
-                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white items-center justify-center flex-shrink-0 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-interactive" aria-label="Close">
+                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white items-center justify-center flex-shrink-0 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-6 w-6 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-interactive" aria-label="Close">
                     <span class="sr-only">Close</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
                 </button>
